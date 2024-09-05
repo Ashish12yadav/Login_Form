@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Login</title>
+  </head>
+
+  <body>
+    <div style="display: flex; width: 90%; height: 90%">
+      <div class="form-container">
+        <form method="post" action="#" class="form">
+          <div class="container">
+            <h1>Login</h1>
+            <div class="input-fields">
+              <div class="favicon">
+                <img src="images/user.png" alt="User" class="class-img" />
+                <input
+                  type="email"
+                  class="inputs"
+                  id="email"
+                  name="email"
+                  placeholder="ashish@123"
+                  required
+                />
+              </div>
+              <div class="pass">
+                <img src="images/padlock.png" alt="" class="class-img" />
+                <input
+                  type="password"
+                  class="inputs"
+                  id="password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                />
+              </div>
+            </div>
+            <div class="input-group-item">
+              <div class="check">
+                <input type="checkbox" name="remember" />
+                <label for="remember">Remember Password</label>
+              </div>
+              <div class="check">
+                <a href="forgot_password.html" class="back-to-login" target="blank">Forget Password</a>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <button type="button" id="btn-submit" class="btn-submit">
+                <b>Login</b>
+              </button>
+              <div class="register">
+                <p>No account yet?</p>
+                <a href="index.html">Register</a>
+              </div>
+              <div class="para">
+                <p>Or Login With:</p>
+              </div>
+            </div>
+            <div class="icon">
+              <button type="button">
+                <img src="images/google.png" alt="" style="width: 30px" />
+              </button>
+              <button type="button">
+                <img src="images/facebook.png" alt="" style="width: 30px" />
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <img
+        class="image"
+        src="images/20602853_6300959.jpg"
+        alt=""
+        style="width: 50%; height: 100%"
+      />
+    </div>
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        push,
+        set,
+      } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyAxtgRillGq3-grgV_6SiEajj_ZGQg1tGY",
+        authDomain: "logincrud-cb1e8.firebaseapp.com",
+        projectId: "logincrud-cb1e8",
+        storageBucket: "logincrud-cb1e8.appspot.com",
+        messagingSenderId: "698191489945",
+        appId: "1:698191489945:web:2c2b857b15eb1952de4108",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+
+      // Get reference to the database service
+      const db = getDatabase(app);
+
+      document
+        .getElementById("btn-submit")
+        .addEventListener("click", function (e) {
+          e.preventDefault(); // Prevent the form from submitting
+          
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+
+          // Create a unique ID and store data under this ID
+          const newUserRef = push(ref(db, "users/"));
+          set(newUserRef, {
+            email: email,
+            password: password,
+          })
+            .then(() => {
+              alert("Login Successful");
+            })
+            .catch((error) => {
+              alert("Error: " + error.message);
+            });
+        });
+    </script>
+  </body>
+</html>
